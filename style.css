@@ -1,0 +1,454 @@
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+body { 
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0f1115 0%, #1a1d2b 100%); 
+    color: #e6e9ef;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+header {
+    background: rgba(23, 26, 33, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center; 
+}
+
+.logo {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #6aa0ff 0%, #7fe3aa 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+}
+
+.brand h1 { 
+    font-size: 1.5rem; 
+    font-weight: 700;
+    background: linear-gradient(135deg, #6aa0ff, #7fe3aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+nav { 
+    display: flex; 
+    gap: 8px; 
+}
+
+.nav-btn {
+    color: #e6e9ef;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-btn:hover {
+    background: rgba(106, 160, 255, 0.2);
+    border-color: #6aa0ff;
+}
+
+main { 
+    padding: 2rem 20px; 
+    max-width: 1400px; 
+    margin: 0 auto; 
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #6aa0ff, #7fe3aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.row { 
+    display: flex; 
+    gap: 24px; 
+    margin-bottom: 2rem; 
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(23, 26, 33, 0.8), rgba(30, 33, 45, 0.6));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    min-width: 400px;
+    min-height: 300px;
+}
+
+.card h3 { 
+    margin-bottom: 1.5rem; 
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #f0f2f5;
+}
+
+h4 { 
+    margin: 1rem 0 0.5rem; 
+    color: #cfd6e6; 
+    font-weight: 500;
+}
+
+label { 
+    display: block; 
+    margin: 1rem 0 0.5rem; 
+    color: #8a94a7; 
+    font-weight: 500;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(15, 19, 32, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #e6e9ef;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #6aa0ff, #5a8ae6);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-right: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e6e9ef;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    background: rgba(106, 160, 255, 0.15);
+    border: 1px solid rgba(106, 160, 255, 0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    color: #a9c6ff;
+}
+
+.chip-chest { background: rgba(255, 107, 107, 0.15); border-color: rgba(255, 107, 107, 0.3); color: #ffa8a8; }
+.chip-back { background: rgba(107, 255, 157, 0.15); border-color: rgba(107, 255, 157, 0.3); color: #a8ffc8; }
+.chip-legs { background: rgba(255, 207, 107, 0.15); border-color: rgba(255, 207, 107, 0.3); color: #ffe0a8; }
+.chip-shoulders { background: rgba(107, 178, 255, 0.15); border-color: rgba(107, 178, 255, 0.3); color: #a8d4ff; }
+.chip-biceps { background: rgba(178, 107, 255, 0.15); border-color: rgba(178, 107, 255, 0.3); color: #d4a8ff; }
+.chip-triceps { background: rgba(255, 107, 200, 0.15); border-color: rgba(255, 107, 200, 0.3); color: #ffa8e6; }
+
+.rowline {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: center;
+    background: rgba(15, 19, 32, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+}
+
+
+.exercise-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 16px;
+    align-items: center;
+}
+
+.exercise-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.exercise-name {
+    font-weight: 600;
+    color: #f0f2f5;
+    margin-bottom: 4px;
+}
+
+.exercise-muscles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.sets-reps {
+    color: #8a94a7;
+    font-size: 14px;
+}
+
+
+.exercise-item {
+    background: rgba(15, 19, 32, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+}
+
+.exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.exercise-number {
+    font-weight: 600;
+    color: #6aa0ff;
+}
+
+.remove-exercise {
+    background: rgba(255, 107, 107, 0.2);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    color: #ffa8a8;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    border: none;
+}
+
+.muscle-group-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.muscle-group {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+}
+
+.muscle-group:hover {
+    background: rgba(106, 160, 255, 0.1);
+    border-color: #6aa0ff;
+}
+
+.muscle-group.selected {
+    background: rgba(106, 160, 255, 0.2);
+    border-color: #6aa0ff;
+}
+
+
+.exercise-preview {
+    background: rgba(15, 19, 32, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 16px;
+}
+
+.exercise-preview h4 {
+    color: #6aa0ff;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+}
+
+.exercise-detail {
+    margin-bottom: 12px;
+}
+
+
+
+
+.muscle-group-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 8px;
+margin: 8px 0;
+}
+
+.muscle-group {
+padding: 10px;
+background: rgba(255, 255, 255, 0.05);
+border-radius: 8px;
+text-align: center;
+border: 1px solid rgba(255, 255, 255, 0.1);
+cursor: pointer;
+transition: all 0.3s ease;
+font-size: 12px;
+}
+
+.muscle-group:hover {
+background: rgba(106, 160, 255, 0.1);
+border-color: #6aa0ff;
+}
+
+.muscle-group.selected {
+background: rgba(106, 160, 255, 0.2);
+border-color: #6aa0ff;
+}
+
+
+.exercise-detail label {
+    color: #8a94a7;
+    font-size: 12px;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.exercise-detail div {
+    color: #e6e9ef;
+    font-size: 14px;
+}
+
+.exercise-technique {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 12px;
+    line-height: 1.5;
+}
+.btn .btn-ghost {
+    width: 90%; 
+    margin-top: 12px;
+}
+
+
+
+.chart {
+    background: rgba(15, 19, 32, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 160px;
+    margin-bottom: 30px;
+    padding: 0 10px;
+}
+
+.bar {
+    background: linear-gradient(to top, #6aa0ff, #8bb5ff);
+    border-radius: 6px 6px 0 0;
+    width: 35px;
+    position: relative;
+    text-align: center;
+}
+
+.bar-label {
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    font-size: 11px;
+    color: #8a94a7;
+    font-weight: 500;
+}
+
+.bar-value {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    font-size: 12px;
+    color: #8a94a7;
+    font-weight: 500;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 1.5rem 0;
+}
+
+.stat-item {
+    background: linear-gradient(135deg, rgba(15, 19, 32, 0.8), rgba(23, 26, 43, 0.6));
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #6aa0ff;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #8a94a7;
+    font-weight: 500;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #8a94a7;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 3rem;
+}
