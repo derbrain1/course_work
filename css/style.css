@@ -305,9 +305,6 @@ input, select, textarea {
     margin-bottom: 12px;
 }
 
-
-
-
 .muscle-group-grid {
 display: grid;
 grid-template-columns: repeat(3, 1fr);
@@ -451,4 +448,163 @@ footer {
     color: #8a94a7;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     margin-top: 3rem;
+}
+
+/* === НОВЫЕ СТИЛИ ДЛЯ МОДАЛЬНЫХ ОКОН И ФУНКЦИОНАЛА === */
+
+/* Модальные окна */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, rgba(23, 26, 33, 0.95), rgba(30, 33, 45, 0.9));
+    margin: 15% auto;
+    padding: 24px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.modal-content h3 {
+    color: #6aa0ff;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* Кнопка удаления */
+.btn-danger {
+    background: linear-gradient(135deg, #ff6a6a, #e05555);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #e05555, #c53030);
+}
+
+/* Поля ввода для подходов и повторений */
+.sets-reps-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sets-reps-inputs input {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+/* Анимации для элементов упражнений */
+.exercise-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    background: rgba(15, 19, 32, 0.6);
+    transition: all 0.2s ease;
+}
+
+.exercise-item:hover {
+    border-color: rgba(106, 160, 255, 0.3);
+}
+
+.exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.remove-exercise-btn {
+    background: rgba(255, 107, 107, 0.2);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    color: #ffa8a8;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.remove-exercise-btn:hover {
+    background: rgba(255, 107, 107, 0.3);
+}
+
+/* Стили для форм в модальных окнах */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.modal-content .btn {
+    margin-right: 8px;
+    margin-top: 0.5rem;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .modal-content {
+        margin: 10% auto;
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .rowline {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .exercise-details {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .card {
+        min-width: 100%;
+    }
+}
+
+/* Стили для состояния загрузки */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Стили для успешных операций */
+.success-message {
+    background: rgba(107, 255, 157, 0.15);
+    border: 1px solid rgba(107, 255, 157, 0.3);
+    color: #a8ffc8;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+/* Стили для ошибок */
+.error-message {
+    background: rgba(255, 107, 107, 0.15);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    color: #ffa8a8;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
 }

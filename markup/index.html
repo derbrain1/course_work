@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SportTracker</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="brand">
+        <h1>SportTracker</h1>
+      </div>
+      <nav>
+        <a href="#" class="nav-btn">План</a>
+        <a href="#" class="nav-btn">Журнал</a>
+        <a href="#" class="nav-btn">Статистика</a>
+        <a href="#" class="nav-btn">Конструктор</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- План -->
+    <section id="plan-section">
+      <h2 class="section-title">План тренировок</h2>
+      <div class="row">
+        <div class="card">
+          <h3>План недели</h3>
+          
+          <!-- Понедельник -->
+          <div class="rowline">
+            <div>
+              <h4>Понедельник — Грудь + Трицепс</h4>
+              <div class="exercise-details">
+                <div class="exercise-info">
+                  <div class="exercise-name">Жим лежа</div>
+                  <div class="exercise-muscles">
+                    <span class="chip chip-chest">Грудь</span>
+                  </div>
+                </div>
+                <div class="sets-reps">4 подхода × 8-12 повторений</div>
+                <a class="btn btn-ghost">Редактировать</a>
+              </div>
+              <div class="exercise-details">
+                <div class="exercise-info">
+                  <div class="exercise-name">Разводки гантелей</div>
+                  <div class="exercise-muscles">
+                    <span class="chip chip-chest">Грудь</span>
+                  </div>
+                </div>
+                <div class="sets-reps">3 подхода × 10-15 повторений</div>
+                <a class="btn btn-ghost">Редактировать</a>
+              </div>
+              <div class="exercise-details">
+                <div class="exercise-info">
+                  <div class="exercise-name">Французский жим</div>
+                  <div class="exercise-muscles">
+                    <span class="chip chip-triceps">Трицепс</span>
+                  </div>
+                </div>
+                <div class="sets-reps">4 подхода × 8-12 повторений</div>
+                <a class="btn btn-ghost">Редактировать</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Среда -->
+          <div class="rowline">
+            <div>
+              <h4>Среда — Спина + Бицепс</h4>
+              <div class="exercise-details">
+                <div class="exercise-info">
+                  <div class="exercise-name">Тяга штанги в наклоне</div>
+                  <div class="exercise-muscles">
+                    <span class="chip chip-back">Спина</span>
+                  </div>
+                </div>
+                <div class="sets-reps">4 подхода × 6-10 повторений</div>
+                <a class="btn btn-ghost">Редактировать</a>
+              </div>
+              <div class="exercise-details">
+                <div class="exercise-info">
+                  <div class="exercise-name">Подтягивания широким хватом</div>
+                  <div class="exercise-muscles">
+                    <span class="chip chip-back">Спина</span>
+                  </div>
+                </div>
+                <div class="sets-reps">3 подхода × 8-12 повторений</div>
+                <a class="btn btn-ghost">Редактировать</a>
+              </div>
+              <div class="exercise-details">
+                <div class="exercise-info">
+                  <div class="exercise-name">Подъем штанги на бицепс</div>
+                  <div class="exercise-muscles">
+                    <span class="chip chip-biceps">Бицепс</span>
+                  </div>
+                </div>
+                <div class="sets-reps">4 подхода × 8-12 повторений</div>
+                <a class="btn btn-ghost">Редактировать</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="card">
+          <h3>Добавить тренировку</h3>
+          <label>День недели</label>
+          <select>
+            <option>Понедельник</option>
+            <option>Вторник</option>
+            <option>Среда</option>
+            <option>Четверг</option>
+            <option>Пятница</option>
+          </select>
+          
+          <label>Название тренировки</label>
+          <input placeholder="Напр. Ноги + Плечи" />
+          
+          <label>Упражнения с мышцами</label>
+          
+          <!-- Упражнение 1 -->
+          <div class="exercise-item">
+            <div class="exercise-header">
+              <span class="exercise-number">Упражнение 1</span>
+              <button class="remove-exercise">Удалить</button>
+            </div>
+            <input placeholder="Название упражнения" />
+            <label>Мышечная группа</label>
+            <div class="muscle-group-grid">
+              <div class="muscle-group selected">Грудь</div>
+              <div class="muscle-group">Спина</div>
+              <div class="muscle-group">Ноги</div>
+              <div class="muscle-group">Плечи</div>
+              <div class="muscle-group">Бицепс</div>
+              <div class="muscle-group">Трицепс</div>
+            </div>
+            <label>Подходы × Повторения</label>
+            <input placeholder="4×8" />
+          </div>
+          <button class="btn btn-ghost" >Добавить упражнение</button>
+          
+          <div style="margin-top:1rem;">
+            <a class="btn">Сохранить тренировку</a>
+            <a class="btn btn-ghost">Очистить</a>
+          </div>
+      </div>
+    </section>
+
+
+    <!-- Журнал -->
+    <section id="log-section">
+      <h2 class="section-title">Журнал тренировок</h2>
+      <div class="row">
+        <div class="card">
+          <h3>История тренировок</h3>
+          <div class="rowline">
+            <div>2025‑10‑26</div>
+            <div>Жим лежа <span class="chip chip-chest">Грудь</span></div>
+            <div>4×8×60 кг</div>
+            <div><a class="btn btn-ghost">✏️ Правка</a></div>
+          </div>
+          <div class="rowline">
+            <div>2025‑10‑24</div>
+            <div>Тяга штанги <span class="chip chip-back">Спина</span></div>
+            <div>5×5×80 кг</div>
+            <div><a class="btn btn-ghost">✏️ Правка</a></div>
+          </div>
+          <div class="rowline">
+            <div>2025‑10‑22</div>
+            <div>Приседания <span class="chip chip-legs">Ноги</span></div>
+            <div>4×6×90 кг</div>
+            <div><a class="btn btn-ghost">✏️ Правка</a></div>
+          </div>
+          <div class="rowline">
+            <div>2025‑10‑20</div>
+            <div>Армейский жим <span class="chip chip-shoulders">Плечи</span></div>
+            <div>4×10×40 кг</div>
+            <div><a class="btn btn-ghost">✏️ Правка</a></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Новая запись</h3>
+          <label>Дата</label>
+          <input placeholder="ГГГГ‑ММ‑ДД" />
+          <label>Упражнение</label>
+          <input placeholder="Напр. Жим лежа" />
+          <label>Мышечная группа</label>
+          <select>
+            <option>Грудь</option>
+            <option>Спина</option>
+            <option>Ноги</option>
+            <option>Плечи</option>
+            <option>Бицепс</option>
+            <option>Трицепс</option>
+          </select>
+          <label>Подходы × Повторения × Вес</label>
+          <input placeholder="4×8×60" />
+          <div style="margin-top:1rem;">
+            <a class="btn">Добавить</a>
+            <a class="btn btn-ghost">Сбросить</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+     <!-- Статистика -->
+    <section id="stats-section">
+      <h2 class="section-title">Статистика прогресса</h2>
+      <div class="row">
+        <div class="card">
+          <h3>Выбор упражнения для анализа</h3>
+          <label>Упражнение</label>
+          <select>
+            <option>Жим лежа</option>
+            <option>Тяга штанги в наклоне</option>
+            <option>Приседания со штангой</option>
+            <option>Становая тяга</option>
+            <option>Армейский жим</option>
+            <option>Подъем штанги на бицепс</option>
+          </select>
+          <label>Мышечная группа</label>
+          <select>
+            <option>Грудь</option>
+            <option>Спина</option>
+            <option>Ноги</option>
+            <option>Плечи</option>
+            <option>Бицепс</option>
+            <option>Трицепс</option>
+          </select>
+          <label>Период</label>
+          <select>
+            <option>Последние 7 дней</option>
+            <option>Последние 30 дней</option>
+            <option>Последние 90 дней</option>
+            <option>Вся история</option>
+          </select>
+          <div style="margin-top:1rem;">
+            <a class="btn">Показать статистику</a>
+          </div>
+        </div>
+        
+      
+        <div class="card">
+          <h3>Прогресс рабочих весов - Жим лежа</h3>
+          <div class="chart">
+            <div class="chart-bars">
+              <div class="bar" style="height: 60%;">
+                <div class="bar-value">60 кг</div>
+                <div class="bar-label">10.10</div>
+              </div>
+              <div class="bar" style="height: 65%;">
+                <div class="bar-value">65 кг</div>
+                <div class="bar-label">12.10</div>
+              </div>
+              <div class="bar" style="height: 62%;">
+                <div class="bar-value">62 кг</div>
+                <div class="bar-label">15.10</div>
+              </div>
+              <div class="bar" style="height: 70%;">
+                <div class="bar-value">70 кг</div>
+                <div class="bar-label">19.10</div>
+              </div>
+              <div class="bar" style="height: 75%;">
+                <div class="bar-value">75 кг</div>
+                <div class="bar-label">23.10</div>
+              </div>
+              <div class="bar" style="height: 80%;">
+                <div class="bar-value">80 кг</div>
+                <div class="bar-label">25.10</div>
+              </div>
+            </div>
+            <div class="chart-labels">
+              <div>Мин: 60кг</div>
+              <div>Сред: 68кг</div>
+              <div>Макс: 80кг</div>
+            </div>
+          </div>
+
+    </section> 
+
+
+    <!-- Конструктор -->
+    <section id="builder-section">
+      <h2 class="section-title">Конструктор упражнений</h2>
+      <div class="row">
+        <div class="card">
+          <h3>Создать упражнение</h3>
+          <label>Название упражнения</label>
+          <input placeholder="Напр. Жим гантелей на наклонной" />
+          
+          <label>Мышечная группа</label>
+          <select>
+            <option>Грудь</option>
+            <option>Спина</option>
+            <option>Ноги</option>
+            <option>Плечи</option>
+            <option>Бицепс</option>
+            <option>Трицепс</option>
+          </select>
+          
+          <label>Оборудование</label>
+          <select>
+            <option>Штанга</option>
+            <option>Гантели</option>
+            <option>Тренажер</option>
+            <option>Собственный вес</option>
+          </select>
+          
+          <label>Техника/подсказки</label>
+          <textarea rows="4" placeholder="Амплитуда, темп, паузы, особенности техники..."></textarea>
+          
+          <div style="margin-top:1rem;">
+            <a class="btn">Сохранить</a>
+            <a class="btn btn-ghost">Очистить</a>
+            <a class="btn" style="background: linear-gradient(135deg, #ff6a6a, #e05555);">Удалить</a>
+          </div>
+        </div>
+        
+        <div class="card">
+          <h3>Справочник упражнений</h3>
+          <div class="rowline" style="cursor: pointer;">
+            <div>Приседания со штангой</div>
+            <div class="chip chip-legs">Ноги</div>
+            <div class="chip">Штанга</div>
+          </div>
+          <div class="rowline" style="cursor: pointer;">
+            <div>Тяга верхнего блока</div>
+            <div class="chip chip-back">Спина</div>
+            <div class="chip">Тренажер</div>
+          </div>
+          <div class="rowline" style="cursor: pointer;">
+            <div>Жим лежа на горизонтальной</div>
+            <div class="chip chip-chest">Грудь</div>
+            <div class="chip">Штанга</div>
+          </div>
+          <div class="rowline" style="cursor: pointer;">
+            <div>Армейский жим стоя</div>
+            <div class="chip chip-shoulders">Плечи</div>
+            <div class="chip">Штанга</div>
+          </div>
+          
+          <!-- Просмотр упражнения -->
+          <div class="exercise-preview">
+            <h4>Армейский жим стоя</h4>
+            <div class="exercise-detail">
+              <label>Мышечная группа:</label>
+              <div><span class="chip chip-shoulders">Плечи</span></div>
+            </div>
+            <div class="exercise-detail">
+              <label>Оборудование:</label>
+              <div><span class="chip">Штанга</span></div>
+            </div>
+            <div class="exercise-detail">
+              <label>Техника выполнения:</label>
+              <div class="exercise-technique">
+                • Встаньте прямо, ноги на ширине плеч<br>
+                • Возьмите штангу хватом чуть шире плеч<br>
+                • Поднимите штангу на грудь, затем над головой<br>
+                • Локти направлены вперед, спина прямая<br>
+                • Опускайте штангу контролируемо до уровня ключиц<br>
+                • Повторите движение в полной амплитуде
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <p>Надежный помощник для спортсменов</p>
+        </div>
+        
+    </div>
+    <div class="copyright">
+        <p>&copy; 2025 SportTracker. Все права защищены.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
