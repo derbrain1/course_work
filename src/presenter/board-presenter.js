@@ -10,12 +10,14 @@ export default class BoardPresenter {
   #boardComponent = new BoardComponent();
   #planModel = null;
   #logModel = null;
+  #exercisesModel = null;
   #currentView = null;
 
-  constructor(boardContainer, planModel, logModel) {
+  constructor(boardContainer, planModel, logModel, exercisesModel) {
     this.#boardContainer = boardContainer;
     this.#planModel = planModel;
     this.#logModel = logModel;
+    this.#exercisesModel = exercisesModel;
 
     this.#planModel.addObserver((updateType) => {
       if (this.#currentView === 'plan') {
@@ -28,6 +30,12 @@ export default class BoardPresenter {
         this.showLog();
       }
     });
+
+    this.#exercisesModel.addObserver((updateType) => {
+      if (this.#currentView === 'constructor') {
+        this.showConstructor();
+      }
+    });
   }
 
   init() {
@@ -36,14 +44,12 @@ export default class BoardPresenter {
   }
 
   showPlan() {
-
     this.#currentView = 'plan';
     this.#clearBoard();
     this.#renderPlanView();
   }
 
   showLog() {
-
     this.#currentView = 'log';
     this.#clearBoard();
     this.#renderLogView();
@@ -70,18 +76,12 @@ export default class BoardPresenter {
   }
 
   #renderPlanView() {
-
-   
     const view = new TrainigPlanComponent(this.#planModel.plans);
 
- 
     view.setHandlers(
       async (exercises) => {
-
-        
         for (const ex of exercises) {
           try {
-            
             await this.#planModel.addPlan({
               day: ex.day,
               exercise: ex.exercise,
@@ -89,27 +89,22 @@ export default class BoardPresenter {
               set: ex.set,
               reps: ex.reps
             });
-
           } catch (err) {
-
+           
           }
         }
       },
 
-
       async (plan) => {
-    
-        
-    
-        const updatedPlan = await this.#showEditPlanModal(plan);
+        const updatedPlan = await this.#showEditPlanModal(plan);  
         if (updatedPlan) {
           try {
             await this.#planModel.updatePlan(updatedPlan);
           } catch (err) {
+          
           }
         }
       },
-
       
       async (id) => {
         const confirmed = confirm('Вы уверены, что хотите удалить это упражнение?');
@@ -117,6 +112,7 @@ export default class BoardPresenter {
           try {
             await this.#planModel.deletePlan(id);
           } catch (err) {
+           
           }
         }
       }
@@ -127,40 +123,35 @@ export default class BoardPresenter {
   }
 
   #renderLogView() {
-    
     const view = new TrainingLogComponent(this.#logModel.logs);
 
     view.setHandlers(
-    
       async (entry) => {
         try {
           await this.#logModel.addLog(entry);
         } catch (err) {
+        
         }
       },
 
-    
       async (entry) => {
-        
         const updatedEntry = await this.#showEditLogModal(entry);
         if (updatedEntry) {
           try {
             await this.#logModel.updateLog(updatedEntry);
           } catch (err) {
+           
           }
         }
       },
-
       
       async (id) => {
-        
         const confirmed = confirm('Вы уверены, что хотите удалить эту запись?');
         if (confirmed) {
           try {
             await this.#logModel.deleteLog(id);
-           
           } catch (err) {
-           
+            
           }
         }
       }
@@ -171,59 +162,86 @@ export default class BoardPresenter {
   }
 
   #renderStatsView() {
-    
-    const view = new StatisticsComponent();
+    const view = new StatisticsComponent(this.#logModel, this.#exercisesModel);
     render(view, this.#boardComponent.element);
-    
+    view.bind();
   }
 
+
   #renderConstructorView() {
-    const view = new ConstructorComponent();
-    render(view, this.#boardComponent.element);
     
+    this.#clearBoard();
+    
+   
+    const view = new ConstructorComponent(this.#exercisesModel.exercises);
+
+    view.setHandlers(
+      async (exercise) => {
+        try {
+          await this.#exercisesModel.addExercise(exercise);
+        } catch (err) {
+         
+          throw err;
+        }
+      }
+    );
+
+    render(view, this.#boardComponent.element);
+    view.bind(); 
   }
+
 
   
   #showEditPlanModal(plan) {
     return new Promise((resolve) => {
-      
       const modal = document.createElement('div');
       modal.className = 'modal';
       modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
           <h3>Редактировать упражнение</h3>
-          <form id="edit-plan-form">
-            <label>День недели</label>
-            <select id="edit-plan-day">
-              <option value="Понедельник" ${plan.day === 'Понедельник' ? 'selected' : ''}>Понедельник</option>
-              <option value="Вторник" ${plan.day === 'Вторник' ? 'selected' : ''}>Вторник</option>
-              <option value="Среда" ${plan.day === 'Среда' ? 'selected' : ''}>Среда</option>
-              <option value="Четверг" ${plan.day === 'Четверг' ? 'selected' : ''}>Четверг</option>
-              <option value="Пятница" ${plan.day === 'Пятница' ? 'selected' : ''}>Пятница</option>
-              <option value="Суббота" ${plan.day === 'Суббота' ? 'selected' : ''}>Суббота</option>
-              <option value="Воскресенье" ${plan.day === 'Воскресенье' ? 'selected' : ''}>Воскресенье</option>
-            </select>
+          <form id="edit-plan-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <label>День недели</label>
+              <select id="edit-plan-day" style="margin-bottom: 0;">
+                <option value="Понедельник" ${plan.day === 'Понедельник' ? 'selected' : ''}>Понедельник</option>
+                <option value="Вторник" ${plan.day === 'Вторник' ? 'selected' : ''}>Вторник</option>
+                <option value="Среда" ${plan.day === 'Среда' ? 'selected' : ''}>Среда</option>
+                <option value="Четверг" ${plan.day === 'Четверг' ? 'selected' : ''}>Четверг</option>
+                <option value="Пятница" ${plan.day === 'Пятница' ? 'selected' : ''}>Пятница</option>
+                <option value="Суббота" ${plan.day === 'Суббота' ? 'selected' : ''}>Суббота</option>
+                <option value="Воскресенье" ${plan.day === 'Воскресенье' ? 'selected' : ''}>Воскресенье</option>
+              </select>
+            </div>
 
-            <label>Упражнение</label>
-            <input id="edit-plan-exercise" value="${plan.exercise || ''}" placeholder="Название упражнения" />
+            <div>
+              <label>Упражнение</label>
+              <input id="edit-plan-exercise" value="${plan.exercise || ''}" placeholder="Название упражнения" style="margin-bottom: 0;" />
+            </div>
 
-            <label>Мышечная группа</label>
-            <select id="edit-plan-muscle">
-              <option value="Грудь" ${plan.muscle === 'Грудь' ? 'selected' : ''}>Грудь</option>
-              <option value="Спина" ${plan.muscle === 'Спина' ? 'selected' : ''}>Спина</option>
-              <option value="Ноги" ${plan.muscle === 'Ноги' ? 'selected' : ''}>Ноги</option>
-              <option value="Плечи" ${plan.muscle === 'Плечи' ? 'selected' : ''}>Плечи</option>
-              <option value="Бицепс" ${plan.muscle === 'Бицепс' ? 'selected' : ''}>Бицепс</option>
-              <option value="Трицепс" ${plan.muscle === 'Трицепс' ? 'selected' : ''}>Трицепс</option>
-            </select>
+            <div>
+              <label>Мышечная группа</label>
+              <select id="edit-plan-muscle" style="margin-bottom: 0;">
+                <option value="Грудь" ${plan.muscle === 'Грудь' ? 'selected' : ''}>Грудь</option>
+                <option value="Спина" ${plan.muscle === 'Спина' ? 'selected' : ''}>Спина</option>
+                <option value="Ноги" ${plan.muscle === 'Ноги' ? 'selected' : ''}>Ноги</option>
+                <option value="Плечи" ${plan.muscle === 'Плечи' ? 'selected' : ''}>Плечи</option>
+                <option value="Бицепс" ${plan.muscle === 'Бицепс' ? 'selected' : ''}>Бицепс</option>
+                <option value="Трицепс" ${plan.muscle === 'Трицепс' ? 'selected' : ''}>Трицепс</option>
+              </select>
+            </div>
 
-            <label>Подходы</label>
-            <input id="edit-plan-set" type="number" min="1" max="20" value="${plan.set || ''}" placeholder="4" />
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+              <div>
+                <label>Подходы</label>
+                <input id="edit-plan-set" type="number" min="1" max="20" value="${plan.set || ''}" placeholder="4" style="margin-bottom: 0;" />
+              </div>
+              <div>
+                <label>Повторения</label>
+                <input id="edit-plan-reps" type="text" value="${plan.reps || ''}" placeholder="8-12" pattern="[0-9\\-]+" title="Только цифры и дефис (например: 8-12)" style="margin-bottom: 0;" />
+              </div>
+            </div>
 
-            <label>Повторения</label>
-            <input id="edit-plan-reps" type="text" value="${plan.reps || ''}" placeholder="8-12" pattern="[0-9\\-]+" title="Только цифры и дефис (например: 8-12)" />
-
-            <div style="margin-top:1rem;">
+            <div style="margin-top: 1rem; display: flex; gap: 0.75rem;">
               <button type="submit" class="btn">Сохранить</button>
               <button type="button" class="btn btn-ghost" id="cancel-edit-btn">Отмена</button>
             </div>
@@ -233,11 +251,9 @@ export default class BoardPresenter {
 
       document.body.appendChild(modal);
 
-      
       const repsInput = modal.querySelector('#edit-plan-reps');
       repsInput.addEventListener('input', (evt) => {
         const value = evt.target.value;
-       
         if (!/^[0-9\\-]*$/.test(value)) {
           evt.target.value = value.slice(0, -1);
         }
@@ -260,7 +276,6 @@ export default class BoardPresenter {
         resolve(updatedPlan);
       });
 
-    
       const cancelBtn = modal.querySelector('#cancel-edit-btn');
       cancelBtn.addEventListener('click', () => {
         document.body.removeChild(modal);
@@ -276,7 +291,7 @@ export default class BoardPresenter {
     });
   }
 
-
+  
   #showEditLogModal(log) {
     return new Promise((resolve) => {
       const date = new Date(log.data * 1000);
@@ -285,35 +300,47 @@ export default class BoardPresenter {
       const modal = document.createElement('div');
       modal.className = 'modal';
       modal.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
           <h3>Редактировать запись</h3>
-          <form id="edit-log-form">
-            <label>Дата</label>
-            <input type="date" id="edit-log-date" value="${dateStr}" />
+          <form id="edit-log-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <label>Дата</label>
+              <input type="date" id="edit-log-date" value="${dateStr}" style="margin-bottom: 0;" />
+            </div>
 
-            <label>Упражнение</label>
-            <input id="edit-log-exercise" value="${log.name || ''}" placeholder="Напр. Жим лежа" />
+            <div>
+              <label>Упражнение</label>
+              <input id="edit-log-exercise" value="${log.name || ''}" placeholder="Напр. Жим лежа" style="margin-bottom: 0;" />
+            </div>
 
-            <label>Мышечная группа</label>
-            <select id="edit-log-muscle">
-              <option value="Грудь" ${log.muscle === 'Грудь' ? 'selected' : ''}>Грудь</option>
-              <option value="Спина" ${log.muscle === 'Спина' ? 'selected' : ''}>Спина</option>
-              <option value="Ноги" ${log.muscle === 'Ноги' ? 'selected' : ''}>Ноги</option>
-              <option value="Плечи" ${log.muscle === 'Плечи' ? 'selected' : ''}>Плечи</option>
-              <option value="Бицепс" ${log.muscle === 'Бицепс' ? 'selected' : ''}>Бицепс</option>
-              <option value="Трицепс" ${log.muscle === 'Трицепс' ? 'selected' : ''}>Трицепс</option>
-            </select>
+            <div>
+              <label>Мышечная группа</label>
+              <select id="edit-log-muscle" style="margin-bottom: 0;">
+                <option value="Грудь" ${log.muscle === 'Грудь' ? 'selected' : ''}>Грудь</option>
+                <option value="Спина" ${log.muscle === 'Спина' ? 'selected' : ''}>Спина</option>
+                <option value="Ноги" ${log.muscle === 'Ноги' ? 'selected' : ''}>Ноги</option>
+                <option value="Плечи" ${log.muscle === 'Плечи' ? 'selected' : ''}>Плечи</option>
+                <option value="Бицепс" ${log.muscle === 'Бицепс' ? 'selected' : ''}>Бицепс</option>
+                <option value="Трицепс" ${log.muscle === 'Трицепс' ? 'selected' : ''}>Трицепс</option>
+              </select>
+            </div>
 
-            <label>Подходы</label>
-            <input type="number" id="edit-log-sets" min="1" max="20" value="${log.set || ''}" placeholder="4" />
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;">
+              <div>
+                <label>Подходы</label>
+                <input type="number" id="edit-log-sets" min="1" max="20" value="${log.set || ''}" placeholder="4" style="margin-bottom: 0;" />
+              </div>
+              <div>
+                <label>Повторения</label>
+                <input type="number" id="edit-log-reps" min="1" max="50" value="${log.reps || ''}" placeholder="8" style="margin-bottom: 0;" />
+              </div>
+              <div>
+                <label>Вес (кг)</label>
+                <input type="number" id="edit-log-weight" min="0" max="500" step="0.5" value="${log.weight || ''}" placeholder="60" style="margin-bottom: 0;" />
+              </div>
+            </div>
 
-            <label>Повторения</label>
-            <input type="number" id="edit-log-reps" min="1" max="50" value="${log.reps || ''}" placeholder="8" />
-
-            <label>Вес (кг)</label>
-            <input type="number" id="edit-log-weight" min="0" max="500" step="0.5" value="${log.weight || ''}" placeholder="60" />
-
-            <div style="margin-top:1rem;">
+            <div style="margin-top: 1rem; display: flex; gap: 0.75rem;">
               <button type="submit" class="btn">Сохранить</button>
               <button type="button" class="btn btn-ghost" id="cancel-edit-log-btn">Отмена</button>
             </div>
@@ -327,7 +354,6 @@ export default class BoardPresenter {
       numberInputs.forEach(input => {
         input.addEventListener('input', (evt) => {
           const value = evt.target.value;
-         
           if (!/^\d*$/.test(value)) {
             evt.target.value = value.slice(0, -1);
           }
@@ -356,6 +382,87 @@ export default class BoardPresenter {
       });
 
       const cancelBtn = modal.querySelector('#cancel-edit-log-btn');
+      cancelBtn.addEventListener('click', () => {
+        document.body.removeChild(modal);
+        resolve(null);
+      });
+
+      modal.addEventListener('click', (evt) => {
+        if (evt.target === modal) {
+          document.body.removeChild(modal);
+          resolve(null);
+        }
+      });
+    });
+  }
+
+  #showEditExerciseModal(exercise) {
+    return new Promise((resolve) => {
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      modal.innerHTML = `
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+          <h3>Редактировать упражнение</h3>
+          <form id="edit-exercise-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div>
+              <label>Название упражнения</label>
+              <input id="edit-exercise-name" value="${exercise.name || ''}" placeholder="Название упражнения" style="margin-bottom: 0;" />
+            </div>
+
+            <div>
+              <label>Мышечная группа</label>
+              <select id="edit-exercise-muscle" style="margin-bottom: 0;">
+                <option value="Грудь" ${exercise.muscle_group === 'Грудь' ? 'selected' : ''}>Грудь</option>
+                <option value="Спина" ${exercise.muscle_group === 'Спина' ? 'selected' : ''}>Спина</option>
+                <option value="Ноги" ${exercise.muscle_group === 'Ноги' ? 'selected' : ''}>Ноги</option>
+                <option value="Плечи" ${exercise.muscle_group === 'Плечи' ? 'selected' : ''}>Плечи</option>
+                <option value="Бицепс" ${exercise.muscle_group === 'Бицепс' ? 'selected' : ''}>Бицепс</option>
+                <option value="Трицепс" ${exercise.muscle_group === 'Трицепс' ? 'selected' : ''}>Трицепс</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Оборудование</label>
+              <select id="edit-exercise-equipment" style="margin-bottom: 0;">
+                <option value="Штанга" ${exercise.equipment === 'Штанга' ? 'selected' : ''}>Штанга</option>
+                <option value="Гантели" ${exercise.equipment === 'Гантели' ? 'selected' : ''}>Гантели</option>
+                <option value="Тренажер" ${exercise.equipment === 'Тренажер' ? 'selected' : ''}>Тренажер</option>
+                <option value="Собственный вес" ${exercise.equipment === 'Собственный вес' ? 'selected' : ''}>Собственный вес</option>
+              </select>
+            </div>
+
+            <div>
+              <label>Техника выполнения</label>
+              <textarea id="edit-exercise-technique" rows="4" style="margin-bottom: 0;">${exercise.technique || ''}</textarea>
+            </div>
+
+            <div style="margin-top: 1rem; display: flex; gap: 0.75rem;">
+              <button type="submit" class="btn">Сохранить</button>
+              <button type="button" class="btn btn-ghost" id="cancel-edit-exercise-btn">Отмена</button>
+            </div>
+          </form>
+        </div>
+      `;
+
+      document.body.appendChild(modal);
+
+      const form = modal.querySelector('#edit-exercise-form');
+      form.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+        
+        const updatedExercise = {
+          ...exercise,
+          name: modal.querySelector('#edit-exercise-name').value.trim(),
+          muscle_group: modal.querySelector('#edit-exercise-muscle').value,
+          equipment: modal.querySelector('#edit-exercise-equipment').value,
+          technique: modal.querySelector('#edit-exercise-technique').value.trim()
+        };
+
+        document.body.removeChild(modal);
+        resolve(updatedExercise);
+      });
+
+      const cancelBtn = modal.querySelector('#cancel-edit-exercise-btn');
       cancelBtn.addEventListener('click', () => {
         document.body.removeChild(modal);
         resolve(null);

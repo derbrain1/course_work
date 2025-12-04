@@ -163,6 +163,21 @@ input, select, textarea {
     color: #e6e9ef;
 }
 
+.btn-danger {
+    background: linear-gradient(135deg, #ff6a6a, #e05555);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #e05555, #c53030);
+}
+
 .chip {
     display: inline-flex;
     align-items: center;
@@ -176,12 +191,41 @@ input, select, textarea {
     color: #a9c6ff;
 }
 
-.chip-chest { background: rgba(255, 107, 107, 0.15); border-color: rgba(255, 107, 107, 0.3); color: #ffa8a8; }
-.chip-back { background: rgba(107, 255, 157, 0.15); border-color: rgba(107, 255, 157, 0.3); color: #a8ffc8; }
-.chip-legs { background: rgba(255, 207, 107, 0.15); border-color: rgba(255, 207, 107, 0.3); color: #ffe0a8; }
-.chip-shoulders { background: rgba(107, 178, 255, 0.15); border-color: rgba(107, 178, 255, 0.3); color: #a8d4ff; }
-.chip-biceps { background: rgba(178, 107, 255, 0.15); border-color: rgba(178, 107, 255, 0.3); color: #d4a8ff; }
-.chip-triceps { background: rgba(255, 107, 200, 0.15); border-color: rgba(255, 107, 200, 0.3); color: #ffa8e6; }
+.chip-chest { 
+    background: rgba(255, 107, 107, 0.15); 
+    border-color: rgba(255, 107, 107, 0.3); 
+    color: #ffa8a8; 
+}
+
+.chip-back { 
+    background: rgba(107, 255, 157, 0.15); 
+    border-color: rgba(107, 255, 157, 0.3); 
+    color: #a8ffc8; 
+}
+
+.chip-legs { 
+    background: rgba(255, 207, 107, 0.15); 
+    border-color: rgba(255, 207, 107, 0.3); 
+    color: #ffe0a8; 
+}
+
+.chip-shoulders { 
+    background: rgba(107, 178, 255, 0.15); 
+    border-color: rgba(107, 178, 255, 0.3); 
+    color: #a8d4ff; 
+}
+
+.chip-biceps { 
+    background: rgba(178, 107, 255, 0.15); 
+    border-color: rgba(178, 107, 255, 0.3); 
+    color: #d4a8ff; 
+}
+
+.chip-triceps { 
+    background: rgba(255, 107, 200, 0.15); 
+    border-color: rgba(255, 107, 200, 0.3); 
+    color: #ffa8e6; 
+}
 
 .rowline {
     display: grid;
@@ -194,7 +238,6 @@ input, select, textarea {
     padding: 16px;
     margin: 12px 0;
 }
-
 
 .exercise-details {
     display: grid;
@@ -226,13 +269,16 @@ input, select, textarea {
     font-size: 14px;
 }
 
-
 .exercise-item {
     background: rgba(15, 19, 32, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     padding: 16px;
     margin: 12px 0;
+}
+
+.exercise-item:hover {
+    border-color: rgba(106, 160, 255, 0.3);
 }
 
 .exercise-header {
@@ -258,9 +304,13 @@ input, select, textarea {
     border: none;
 }
 
+.remove-exercise:hover {
+    background: rgba(255, 107, 107, 0.3);
+}
+
 .muscle-group-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     margin: 8px 0;
 }
@@ -286,7 +336,6 @@ input, select, textarea {
     border-color: #6aa0ff;
 }
 
-
 .exercise-preview {
     background: rgba(15, 19, 32, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -304,35 +353,6 @@ input, select, textarea {
 .exercise-detail {
     margin-bottom: 12px;
 }
-
-.muscle-group-grid {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 8px;
-margin: 8px 0;
-}
-
-.muscle-group {
-padding: 10px;
-background: rgba(255, 255, 255, 0.05);
-border-radius: 8px;
-text-align: center;
-border: 1px solid rgba(255, 255, 255, 0.1);
-cursor: pointer;
-transition: all 0.3s ease;
-font-size: 12px;
-}
-
-.muscle-group:hover {
-background: rgba(106, 160, 255, 0.1);
-border-color: #6aa0ff;
-}
-
-.muscle-group.selected {
-background: rgba(106, 160, 255, 0.2);
-border-color: #6aa0ff;
-}
-
 
 .exercise-detail label {
     color: #8a94a7;
@@ -352,13 +372,8 @@ border-color: #6aa0ff;
     padding: 16px;
     margin-top: 12px;
     line-height: 1.5;
+    white-space: pre-line;
 }
-.btn .btn-ghost {
-    width: 90%; 
-    margin-top: 12px;
-}
-
-
 
 .chart {
     background: rgba(15, 19, 32, 0.6);
@@ -450,9 +465,6 @@ footer {
     margin-top: 3rem;
 }
 
-/* === НОВЫЕ СТИЛИ ДЛЯ МОДАЛЬНЫХ ОКОН И ФУНКЦИОНАЛА === */
-
-/* Модальные окна */
 .modal {
     position: fixed;
     z-index: 1000;
@@ -465,11 +477,13 @@ footer {
 
 .modal-content {
     background: linear-gradient(135deg, rgba(23, 26, 33, 0.95), rgba(30, 33, 45, 0.9));
-    margin: 15% auto;
-    padding: 24px;
+    margin: 5% auto;
+    padding: 1.25rem;
     border-radius: 16px;
     width: 90%;
-    max-width: 500px;
+    max-width: 450px;
+    max-height: 85vh;
+    overflow-y: auto;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
@@ -481,23 +495,24 @@ footer {
     font-weight: 600;
 }
 
-/* Кнопка удаления */
-.btn-danger {
-    background: linear-gradient(135deg, #ff6a6a, #e05555);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.modal-content input,
+.modal-content select {
+    padding: 0.625rem 0.75rem;
     font-size: 0.875rem;
-    font-weight: 500;
+    margin-bottom: 0;
 }
 
-.btn-danger:hover {
-    background: linear-gradient(135deg, #e05555, #c53030);
+.modal-content .btn {
+    margin-right: 8px;
+    margin-top: 0.5rem;
 }
 
-/* Поля ввода для подходов и повторений */
 .sets-reps-inputs {
     display: flex;
     align-items: center;
@@ -509,61 +524,59 @@ footer {
     margin-bottom: 0;
 }
 
-/* Анимации для элементов упражнений */
-.exercise-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 16px;
-    margin: 12px 0;
-    background: rgba(15, 19, 32, 0.6);
-    transition: all 0.2s ease;
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
 }
 
-.exercise-item:hover {
-    border-color: rgba(106, 160, 255, 0.3);
+.success-message {
+    background: rgba(107, 255, 157, 0.15);
+    border: 1px solid rgba(107, 255, 157, 0.3);
+    color: #a8ffc8;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
 }
 
-.exercise-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.remove-exercise-btn {
-    background: rgba(255, 107, 107, 0.2);
+.error-message {
+    background: rgba(255, 107, 107, 0.15);
     border: 1px solid rgba(255, 107, 107, 0.3);
     color: #ffa8a8;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 12px;
-    border: none;
-    transition: all 0.3s ease;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 1rem 0;
+    text-align: center;
 }
 
-.remove-exercise-btn:hover {
-    background: rgba(255, 107, 107, 0.3);
+
+.exercise-item.selected-exercise {
+    border-color: #6aa0ff !important;
+    background: rgba(106, 160, 255, 0.1) !important;
 }
 
-/* Стили для форм в модальных окнах */
-.modal-content form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.exercise-item.selected-exercise .chip {
+    background: rgba(106, 160, 255, 0.2) !important;
+    border-color: #6aa0ff !important;
 }
 
-.modal-content .btn {
-    margin-right: 8px;
-    margin-top: 0.5rem;
+
+.technique-step {
+    margin-bottom: 8px;
+    line-height: 1.5;
 }
 
-/* Адаптивность для мобильных устройств */
+.technique-step:last-child {
+    margin-bottom: 0;
+}
+
+
 @media (max-width: 768px) {
     .modal-content {
-        margin: 10% auto;
+        margin: 2% auto;
+        padding: 1rem;
         width: 95%;
-        padding: 20px;
+        max-height: 90vh;
     }
     
     .rowline {
@@ -579,32 +592,343 @@ footer {
     .card {
         min-width: 100%;
     }
+    
+    .row {
+        gap: 16px;
+    }
+    
+    .muscle-group-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-/* Стили для состояния загрузки */
-.loading {
-    opacity: 0.6;
-    pointer-events: none;
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .exercise-item-container {
+    margin-bottom: 4px;
+  }
+  
+  .exercise-clickable {
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  
+  .exercise-clickable:hover {
+    background: rgba(106, 160, 255, 0.05);
+    border-color: rgba(106, 160, 255, 0.2);
+  }
+  
+  .exercise-clickable .toggle-icon {
+    transition: transform 0.2s ease;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
+  }
+  
+  .exercise-details-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid #6aa0ff;
+  }
+  
+  .exercise-details-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+  
+  .exercise-details-card .btn-ghost {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .exercise-details-card .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .exercise-details-card {
+      padding: 16px;
+    }
+    
+    .exercise-details-card > div:first-child {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+
+.exercise-clickable > div:first-child {
+    color: #f0f2f5;
+    font-weight: 500;
 }
 
-/* Стили для успешных операций */
-.success-message {
-    background: rgba(107, 255, 157, 0.15);
-    border: 1px solid rgba(107, 255, 157, 0.3);
-    color: #a8ffc8;
-    padding: 12px;
+.exercise-clickable .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 8px;
+    border: 1px solid;
+}
+
+
+.exercise-clickable .chip:not([class*="chip-"]) {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #8a94a7;
+}
+
+
+.exercise-clickable .chip-chest { 
+    background: rgba(255, 107, 107, 0.15) !important; 
+    border-color: rgba(255, 107, 107, 0.3) !important; 
+    color: #ffa8a8 !important; 
+}
+
+.exercise-clickable .chip-back { 
+    background: rgba(107, 255, 157, 0.15) !important; 
+    border-color: rgba(107, 255, 157, 0.3) !important; 
+    color: #a8ffc8 !important; 
+}
+
+.exercise-clickable .chip-legs { 
+    background: rgba(255, 207, 107, 0.15) !important; 
+    border-color: rgba(255, 207, 107, 0.3) !important; 
+    color: #ffe0a8 !important; 
+}
+
+.exercise-clickable .chip-shoulders { 
+    background: rgba(107, 178, 255, 0.15) !important; 
+    border-color: rgba(107, 178, 255, 0.3) !important; 
+    color: #a8d4ff !important; 
+}
+
+.exercise-clickable .chip-biceps { 
+    background: rgba(178, 107, 255, 0.15) !important; 
+    border-color: rgba(178, 107, 255, 0.3) !important; 
+    color: #d4a8ff !important; 
+}
+
+.exercise-clickable .chip-triceps { 
+    background: rgba(255, 107, 200, 0.15) !important; 
+    border-color: rgba(255, 107, 200, 0.3) !important; 
+    color: #ffa8e6 !important; 
+}
+
+#stats-section .stats-controls {
+    margin-bottom: 1rem;
+}
+
+#stats-section .stats-controls select {
+    margin-bottom: 1rem;
+}
+
+#stats-section .exercise-info {
+    background: rgba(15, 19, 32, 0.5);
     border-radius: 8px;
-    margin: 1rem 0;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px solid rgba(106, 160, 255, 0.2);
+    display: none;
+}
+
+#stats-section .exercise-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+#stats-section .exercise-info small {
+    color: #8a94a7;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+#stats-section .info-value {
+    color: #e6e9ef;
+    font-weight: 500;
+}
+
+#stats-section #info-muscle {
+    color: #6aa0ff;
+}
+
+#stats-section .info-date {
+    color: #8a94a7;
+    font-size: 11px;
+}
+
+#stats-section .stats-buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+#stats-section .stats-placeholder {
+    padding: 40px;
+    text-align: center;
+    color: #8a94a7;
+}
+
+
+#stats-chart-container .stats-chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 20px 0;
+}
+
+#stats-chart-container .stats-weight-scale {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 11px;
+    color: #8a94a7;
+    margin-bottom: 10px;
+}
+
+#stats-chart-container .weight-min {
+    text-align: left;
+}
+
+#stats-chart-container .weight-avg {
     text-align: center;
 }
 
-/* Стили для ошибок */
-.error-message {
-    background: rgba(255, 107, 107, 0.15);
-    border: 1px solid rgba(255, 107, 107, 0.3);
-    color: #ffa8a8;
-    padding: 12px;
-    border-radius: 8px;
-    margin: 1rem 0;
+#stats-chart-container .weight-max {
+    text-align: right;
+}
+
+#stats-chart-container .stats-chart-bars {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    height: 180px;
+    padding: 20px 0;
+    width: 100%;
+}
+
+#stats-chart-container .bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 0 1 auto;
+    min-width: 50px;
+}
+
+#stats-chart-container .bar-wrapper {
+    position: relative;
+    height: 150px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+#stats-chart-container .bar {
+    width: 40px;
+    background: linear-gradient(to top, #6aa0ff, #8bb5ff);
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+#stats-chart-container .bar:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+#stats-chart-container .bar-value {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
     text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #6aa0ff;
+}
+
+#stats-chart-container .bar-date {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #8a94a7;
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+#stats-chart-container .bar[data-muscle="Грудь"] { 
+    background: linear-gradient(to top, #6aa0ff, #8bb5ff); 
+}
+#stats-chart-container .bar[data-muscle="Спина"] { 
+    background: linear-gradient(to top, #4caf50, #66bb6a); 
+}
+#stats-chart-container .bar[data-muscle="Ноги"] { 
+    background: linear-gradient(to top, #ff9800, #ffb74d); 
+}
+#stats-chart-container .bar[data-muscle="Плечи"] { 
+    background: linear-gradient(to top, #9c27b0, #ba68c8); 
+}
+#stats-chart-container .bar[data-muscle="Бицепс"] { 
+    background: linear-gradient(to top, #f44336, #ef5350); 
+}
+#stats-chart-container .bar[data-muscle="Трицепс"] { 
+    background: linear-gradient(to top, #2196f3, #42a5f5); 
+}
+
+
+#stats-summary.stats-summary {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #2d3546;
+}
+
+#stats-summary.stats-summary .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+#stats-summary.stats-summary .stat-item {
+    background: rgba(15, 19, 32, 0.8);
+    border-radius: 8px;
+    padding: 15px;
+    border: 1px solid rgba(106, 160, 255, 0.1);
+}
+
+#stats-summary.stats-summary .stat-label {
+    font-size: 12px;
+    color: #8a94a7;
+    margin-bottom: 5px;
+}
+
+#stats-summary.stats-summary .stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e6e9ef;
+}
+
+#stats-summary.stats-summary .stat-value.positive {
+    color: #4caf50;
+}
+
+#stats-summary.stats-summary .stat-value.negative {
+    color: #f44336;
 }
