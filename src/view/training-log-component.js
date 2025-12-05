@@ -1,4 +1,6 @@
 import { AbstractComponent } from '../framework/view/abstract-component.js';
+import { render } from '../framework/render.js';
+import LogElementComponent from './log-element-component.js';
 
 export default class TrainingLogComponent extends AbstractComponent {
   #logs = [];
@@ -12,25 +14,13 @@ export default class TrainingLogComponent extends AbstractComponent {
   }
 
   get template() {
-    const logItems = this.#logs.map(log => 
-      `<div class="rowline" data-id="${log.id}">
-        <div>${this.#formatDate(log.data)}</div>
-        <div>${log.name} <span class="chip chip-${this.#getMuscleClass(log.muscle)}">${log.muscle}</span></div>
-        <div>${log.set}×${log.reps}×${log.weight} кг</div>
-        <div class="log-actions">
-          <button class="btn btn-ghost edit-log" data-id="${log.id}">✏️ Правка</button>
-          <button class="btn btn-ghost delete-log" data-id="${log.id}">Удалить</button>
-        </div>
-      </div>`
-    ).join('');
-
-    return (`
+    return `
       <section id="log-section">
         <h2 class="section-title">Журнал тренировок</h2>
         <div class="row">
           <div class="card">
             <h3>История тренировок</h3>
-            ${logItems.length > 0 ? logItems : '<p>Нет записей о тренировках</p>'}
+            <div id="log-container"></div>
           </div>
 
           <div class="card">
@@ -60,18 +50,17 @@ export default class TrainingLogComponent extends AbstractComponent {
             </div>
           </div>
         </div>
-      </section>`
-    );
+      </section>
+    `;
   }
 
   bind() {
-    
-    this.#setupNumberValidation();
+    this.#renderLogs();
     
     this.element.querySelector('#add-log-btn').addEventListener('click', async () => {
-      
       const dateStr = this.element.querySelector('#log-date').value;
       const timestamp = dateStr ? Math.floor(new Date(dateStr).getTime() / 1000) : Math.floor(Date.now() / 1000);
+      
       const log = {
         data: timestamp,
         name: this.element.querySelector('#log-exercise').value.trim(),
@@ -81,36 +70,22 @@ export default class TrainingLogComponent extends AbstractComponent {
         weight: Number(this.element.querySelector('#log-weight').value) || 0
       };
 
-     
-
       if (!log.name) {
-        
         alert('Пожалуйста, введите название упражнения');
         return;
       }
 
       if (this.#onCreate) {
         await this.#onCreate(log);
-       
-        this.element.querySelector('#log-date').value = '';
-        this.element.querySelector('#log-exercise').value = '';
-        this.element.querySelector('#log-sets').value = '';
-        this.element.querySelector('#log-reps').value = '';
-        this.element.querySelector('#log-weight').value = '';
+        this.#clearForm();
       }
     });
 
-   
     this.element.querySelector('#reset-log-btn').addEventListener('click', () => {
-
-      this.element.querySelector('#log-date').value = '';
-      this.element.querySelector('#log-exercise').value = '';
-      this.element.querySelector('#log-sets').value = '';
-      this.element.querySelector('#log-reps').value = '';
-      this.element.querySelector('#log-weight').value = '';
+      this.#clearForm();
     });
 
-
+    
     this.element.addEventListener('click', async (evt) => {
       if (evt.target.classList.contains('edit-log')) {
         const id = evt.target.dataset.id;
@@ -127,18 +102,27 @@ export default class TrainingLogComponent extends AbstractComponent {
     });
   }
 
-  
-  #setupNumberValidation() {
-    const numberInputs = this.element.querySelectorAll('input[type="number"]');
-    numberInputs.forEach(input => {
-      input.addEventListener('input', (evt) => {
-        const value = evt.target.value;
-        
-        if (!/^\d*$/.test(value)) {
-          evt.target.value = value.slice(0, -1);
-        }
-      });
+  #renderLogs() {
+    const container = this.element.querySelector('#log-container');
+    container.innerHTML = '';
+    
+    if (this.#logs.length === 0) {
+      container.innerHTML = '<p>Нет записей о тренировках</p>';
+      return;
+    }
+    
+    this.#logs.forEach(log => {
+      const logElement = new LogElementComponent(log);
+      render(logElement, container);
     });
+  }
+
+  #clearForm() {
+    this.element.querySelector('#log-date').value = '';
+    this.element.querySelector('#log-exercise').value = '';
+    this.element.querySelector('#log-sets').value = '';
+    this.element.querySelector('#log-reps').value = '';
+    this.element.querySelector('#log-weight').value = '';
   }
 
   setHandlers(onCreate, onUpdate, onDelete) {
@@ -147,37 +131,8 @@ export default class TrainingLogComponent extends AbstractComponent {
     this.#onDelete = onDelete;
   }
 
-  #formatDate(timestamp) {
-    
-    const ts = Number(timestamp) || 0;
-    const date = new Date(ts * 1000);
-    if (isNaN(date.getTime())) return '';
-    return date.toLocaleDateString('ru-RU', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    });
-  }
-
-  #getMuscleClass(muscle) {
-    const muscleClasses = {
-      'Грудь': 'chest',
-      'Спина': 'back',
-      'Ноги': 'legs',
-      'Плечи': 'shoulders',
-      'Бицепс': 'biceps',
-      'Трицепс': 'triceps'
-    };
-    return muscleClasses[muscle] || 'default';
-  }
-
-  
   update(logs) {
     this.#logs = logs;
-    this.removeElement();
-  }
-
-  removeElement() {
-    super.removeElement();
+    this.#renderLogs();
   }
 }

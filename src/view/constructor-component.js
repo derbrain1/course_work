@@ -42,7 +42,7 @@ export default class ConstructorComponent extends AbstractComponent {
               <label>Техника/подсказки</label>
               <textarea id="exercise-technique" rows="4" placeholder="Амплитуда, темп, паузы, особенности техники..." required></textarea>
               
-              <div style="margin-top:1rem;">
+              <div class="form-buttons">
                 <button type="submit" class="btn">Сохранить</button>
                 <button type="button" class="btn btn-ghost" id="clear-form-btn">Очистить</button>
               </div>
@@ -68,20 +68,20 @@ export default class ConstructorComponent extends AbstractComponent {
     let html = '';
     
     groups.forEach(muscleGroup => {
-      html += `<h4 style="margin-top: 1rem; color: #cfd6e6; font-weight: 500;">${muscleGroup}</h4>`;
+      html += `<h4 class="muscle-group-title">${muscleGroup}</h4>`;
       
       muscleGroups[muscleGroup].forEach(exercise => {
         const isExpanded = this.#expandedExercises.has(exercise.id);
         
         html += `
           <div class="exercise-item-container">
-            <div class="rowline exercise-clickable" data-id="${exercise.id}" style="cursor: pointer; margin-bottom: ${isExpanded ? '8px' : '12px'};">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <span class="toggle-icon" style="color: #6aa0ff; font-size: 14px;">${isExpanded ? '▼' : '▶'}</span>
-                <div>${exercise.name}</div>
+            <div class="rowline exercise-clickable ${isExpanded ? 'expanded' : ''}" data-id="${exercise.id}">
+              <div class="exercise-clickable-header">
+                <span class="toggle-icon">${isExpanded ? '▼' : '▶'}</span>
+                <div class="exercise-name">${exercise.name}</div>
               </div>
               <div class="chip chip-${this.#getMuscleClass(exercise.muscle_group)}">${exercise.muscle_group}</div>
-              <div class="chip">${exercise.equipment || 'Не указано'}</div>
+              <div class="chip equipment-chip">${exercise.equipment || 'Не указано'}</div>
             </div>
             
             ${isExpanded ? this.#renderExerciseDetails(exercise) : ''}
@@ -94,40 +94,25 @@ export default class ConstructorComponent extends AbstractComponent {
 
   #renderExerciseDetails(exercise) {
     return `
-      <div class="exercise-details-card" data-id="${exercise.id}" style="
-        background: rgba(15, 19, 32, 0.8);
-        border: 1px solid rgba(106, 160, 255, 0.2);
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 12px;
-        animation: fadeIn 0.3s ease;
-      ">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-          <h4 style="color: #6aa0ff; margin: 0; font-size: 1.2rem;">${exercise.name}</h4>
-              
+      <div class="exercise-details-card" data-id="${exercise.id}">
+        <div class="exercise-details-header">
+          <h4 class="exercise-details-title">${exercise.name}</h4>
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
-          <div>
-            <label style="color: #8a94a7; font-size: 12px; margin-bottom: 4px; display: block;">Мышечная группа:</label>
+        <div class="exercise-details-grid">
+          <div class="exercise-detail-item">
+            <label class="exercise-detail-label">Мышечная группа:</label>
             <div><span class="chip chip-${this.#getMuscleClass(exercise.muscle_group)}">${exercise.muscle_group}</span></div>
           </div>
-          <div>
-            <label style="color: #8a94a7; font-size: 12px; margin-bottom: 4px; display: block;">Оборудование:</label>
-            <div><span class="chip">${exercise.equipment || 'Не указано'}</span></div>
+          <div class="exercise-detail-item">
+            <label class="exercise-detail-label">Оборудование:</label>
+            <div><span class="chip equipment-chip">${exercise.equipment || 'Не указано'}</span></div>
           </div>
         </div>
         
-        <div>
-          <label style="color: #8a94a7; font-size: 12px; margin-bottom: 8px; display: block;">Техника выполнения:</label>
-          <div class="exercise-technique" style="
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 16px;
-            line-height: 1.6;
-            color: #e6e9ef;
-            white-space: pre-line;
-          ">
+        <div class="exercise-technique-section">
+          <label class="exercise-detail-label">Техника выполнения:</label>
+          <div class="exercise-technique-content">
             ${this.#formatTechnique(exercise.technique)}
           </div>
         </div>
@@ -137,21 +122,10 @@ export default class ConstructorComponent extends AbstractComponent {
   #formatTechnique(technique) {
     if (!technique) return 'Не указано';
     
-     
-    const steps = technique.split(/\.\s+/).filter(step => step.trim().length > 0);
-    
-    if (steps.length === 0) return technique;
-    
-    
-    if (technique.match(/^\d+\./)) {
-      return technique.replace(/(\d+\.)/g, '<br>$1').replace(/^<br>/, '');
+    if (technique.includes('\n')) {
+      return technique.replace(/\n/g, '<br>');
     }
-    
-   
-    return steps.map((step, index) => {
-      const trimmedStep = step.trim();
-      return `${index + 1}. ${trimmedStep}${!trimmedStep.endsWith('.') ? '.' : ''}`;
-    }).join('<br>');
+    return technique;
   }
 
   #groupExercisesByMuscleGroup() {
@@ -208,10 +182,8 @@ export default class ConstructorComponent extends AbstractComponent {
       form.reset();
     });
 
-    
     this.element.addEventListener('click', (evt) => {
       const clickable = evt.target.closest('.exercise-clickable');
-      const closeBtn = evt.target.closest('.close-details-btn');
       
       if (clickable) {
         const id = clickable.dataset.id;
@@ -222,11 +194,6 @@ export default class ConstructorComponent extends AbstractComponent {
           this.#expandedExercises.add(id);
         }
         
-        this.#updateRightCard();
-      } 
-      else if (closeBtn) {
-        const id = closeBtn.dataset.id;
-        this.#expandedExercises.delete(id);
         this.#updateRightCard();
       }
     });

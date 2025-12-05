@@ -171,8 +171,6 @@ export default class BoardPresenter {
   #renderConstructorView() {
     
     this.#clearBoard();
-    
-   
     const view = new ConstructorComponent(this.#exercisesModel.exercises);
 
     view.setHandlers(
@@ -282,12 +280,26 @@ export default class BoardPresenter {
         resolve(null);
       });
 
+      
+
       modal.addEventListener('click', (evt) => {
         if (evt.target === modal) {
           document.body.removeChild(modal);
           resolve(null);
         }
       });
+      
+       function handleKeyPress(evt) {
+        if (evt.key === 'Escape') {
+          if (modal && document.body.contains(modal)) {
+            document.removeEventListener('keydown', handleKeyPress);
+            document.body.removeChild(modal);
+          }
+          resolve(null);
+        }
+      }
+      document.addEventListener('keydown', handleKeyPress);
+      
     });
   }
 
@@ -393,87 +405,19 @@ export default class BoardPresenter {
           resolve(null);
         }
       });
-    });
-  }
-
-  #showEditExerciseModal(exercise) {
-    return new Promise((resolve) => {
-      const modal = document.createElement('div');
-      modal.className = 'modal';
-      modal.innerHTML = `
-        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
-          <h3>Редактировать упражнение</h3>
-          <form id="edit-exercise-form" style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <div>
-              <label>Название упражнения</label>
-              <input id="edit-exercise-name" value="${exercise.name || ''}" placeholder="Название упражнения" style="margin-bottom: 0;" />
-            </div>
-
-            <div>
-              <label>Мышечная группа</label>
-              <select id="edit-exercise-muscle" style="margin-bottom: 0;">
-                <option value="Грудь" ${exercise.muscle_group === 'Грудь' ? 'selected' : ''}>Грудь</option>
-                <option value="Спина" ${exercise.muscle_group === 'Спина' ? 'selected' : ''}>Спина</option>
-                <option value="Ноги" ${exercise.muscle_group === 'Ноги' ? 'selected' : ''}>Ноги</option>
-                <option value="Плечи" ${exercise.muscle_group === 'Плечи' ? 'selected' : ''}>Плечи</option>
-                <option value="Бицепс" ${exercise.muscle_group === 'Бицепс' ? 'selected' : ''}>Бицепс</option>
-                <option value="Трицепс" ${exercise.muscle_group === 'Трицепс' ? 'selected' : ''}>Трицепс</option>
-              </select>
-            </div>
-
-            <div>
-              <label>Оборудование</label>
-              <select id="edit-exercise-equipment" style="margin-bottom: 0;">
-                <option value="Штанга" ${exercise.equipment === 'Штанга' ? 'selected' : ''}>Штанга</option>
-                <option value="Гантели" ${exercise.equipment === 'Гантели' ? 'selected' : ''}>Гантели</option>
-                <option value="Тренажер" ${exercise.equipment === 'Тренажер' ? 'selected' : ''}>Тренажер</option>
-                <option value="Собственный вес" ${exercise.equipment === 'Собственный вес' ? 'selected' : ''}>Собственный вес</option>
-              </select>
-            </div>
-
-            <div>
-              <label>Техника выполнения</label>
-              <textarea id="edit-exercise-technique" rows="4" style="margin-bottom: 0;">${exercise.technique || ''}</textarea>
-            </div>
-
-            <div style="margin-top: 1rem; display: flex; gap: 0.75rem;">
-              <button type="submit" class="btn">Сохранить</button>
-              <button type="button" class="btn btn-ghost" id="cancel-edit-exercise-btn">Отмена</button>
-            </div>
-          </form>
-        </div>
-      `;
-
-      document.body.appendChild(modal);
-
-      const form = modal.querySelector('#edit-exercise-form');
-      form.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-        
-        const updatedExercise = {
-          ...exercise,
-          name: modal.querySelector('#edit-exercise-name').value.trim(),
-          muscle_group: modal.querySelector('#edit-exercise-muscle').value,
-          equipment: modal.querySelector('#edit-exercise-equipment').value,
-          technique: modal.querySelector('#edit-exercise-technique').value.trim()
-        };
-
-        document.body.removeChild(modal);
-        resolve(updatedExercise);
-      });
-
-      const cancelBtn = modal.querySelector('#cancel-edit-exercise-btn');
-      cancelBtn.addEventListener('click', () => {
-        document.body.removeChild(modal);
-        resolve(null);
-      });
-
-      modal.addEventListener('click', (evt) => {
-        if (evt.target === modal) {
-          document.body.removeChild(modal);
+      
+      function handleKeyPress(evt) {
+        if (evt.key === 'Escape') {
+          if (modal && document.body.contains(modal)) {
+            document.removeEventListener('keydown', handleKeyPress);
+            document.body.removeChild(modal);
+          }
           resolve(null);
         }
-      });
+      }
+      document.addEventListener('keydown', handleKeyPress);
     });
   }
+
+  
 }
